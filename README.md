@@ -1,6 +1,6 @@
 # Proyek Capstone: Pipeline Big Data E-Commerce
 
-[cite_start]Dokumentasi ini merangkum langkah-langkah teknis yang diambil untuk membangun *end-to-end data pipeline* sederhana, sesuai dengan tugas "Big Data Capstone Project"[cite: 1]. [cite_start]Pipeline ini mencakup proses Ingestion, Storage, Processing, dan Visualization data penjualan e-commerce[cite: 5, 41].
+Dokumentasi ini merangkum langkah-langkah teknis yang diambil untuk membangun *end-to-end data pipeline* sederhana, sesuai dengan tugas "Big Data Capstone Project"[cite: 1]. [cite_start]Pipeline ini mencakup proses Ingestion, Storage, Processing, dan Visualization data penjualan e-commerce.
 
 ## 1. Arsitektur Sistem
 
