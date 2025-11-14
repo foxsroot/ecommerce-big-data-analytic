@@ -1,6 +1,6 @@
 # Proyek Capstone: Pipeline Big Data E-Commerce
 
-[cite_start]Dokumentasi ini merangkum langkah-langkah teknis yang diambil untuk membangun *end-to-end data pipeline* sederhana, sesuai dengan tugas "Big Data Capstone Project"[cite: 1]. [cite_start]Pipeline ini mencakup proses Ingestion, Storage, Processing, dan Visualization data penjualan e-commerce[cite: 5, 41].
+Dokumentasi ini merangkum langkah-langkah teknis yang diambil untuk membangun *end-to-end data pipeline* sederhana, sesuai dengan tugas "Big Data Capstone Project". Pipeline ini mencakup proses Ingestion, Storage, Processing, dan Visualization data penjualan e-commerce.
 
 ## 1. Arsitektur Sistem
 
@@ -52,11 +52,11 @@ Tujuan: Memindahkan file `ecommerce.parquet` dari *filesystem* Windows ke *files
     ```bash
     docker exec namenode hdfs dfs -put /tmp/ecommerce.parquet /proyek_bigdata/
     ```
-    [cite_start]**Hasil:** File data mentah berhasil disimpan di HDFS dan siap diproses[cite: 14].
+   **Hasil:** File data mentah berhasil disimpan di HDFS dan siap diproses.
 
 ### Tahap 2: Processing (Spark SQL/PySpark)
 
-[cite_start]Tujuan: Menjalankan skrip PySpark (`proses.py`) untuk membaca data dari HDFS, melakukan agregasi [cite: 20][cite_start], dan menyimpan hasilnya kembali ke HDFS[cite: 21].
+Tujuan: Menjalankan skrip PySpark (`proses.py`) untuk membaca data dari HDFS, melakukan agregasi, dan menyimpan hasilnya kembali ke HDFS.
 
 1.  **Salin Skrip PySpark ke Container Spark**
     Menyalin skrip `proses.py` dari direktori *home* Ubuntu (`../`) ke folder `/tmp` di dalam container `spark-master`.
@@ -70,11 +70,11 @@ Tujuan: Memindahkan file `ecommerce.parquet` dari *filesystem* Windows ke *files
     ```bash
     docker exec spark-master /spark/bin/spark-submit /tmp/proses.py
     ```
-    [cite_start]**Hasil:** Skrip berhasil dieksekusi, membaca data dari `hdfs://namenode:9000`, melakukan agregasi, dan menyimpan hasilnya ke `hdfs://namenode:9000/proyek_bigdata/hasil_agregasi`[cite: 14].
+    **Hasil:** Skrip berhasil dieksekusi, membaca data dari `hdfs://namenode:9000`, melakukan agregasi, dan menyimpan hasilnya ke `hdfs://namenode:9000/proyek_bigdata/hasil_agregasi`.
 
 ### Tahap 3: Visualization (Python Lokal)
 
-[cite_start]Tujuan: Mengambil data hasil agregasi dari HDFS, membawanya ke mesin lokal (Ubuntu), dan membuat visualisasi[cite: 22].
+Tujuan: Mengambil data hasil agregasi dari HDFS, membawanya ke mesin lokal (Ubuntu), dan membuat visualisasi.
 
 1.  **Ambil Hasil Agregasi dari HDFS**
     Menyalin data hasil (`hasil_agregasi`) dari HDFS ke *filesystem* sementara (`/tmp`) di container `namenode`.
