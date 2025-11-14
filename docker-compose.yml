@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  # Service 1: HDFS NameNode (Pengelola HDFS)
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    restart: always
+    ports:
+      - "9870:9870"  # Ini adalah Web UI HDFS
+      - "9000:9000"  # Ini adalah port untuk Spark/klien lain terhubung ke HDFS
+    volumes:
+      - hadoop_namenode_data:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./hadoop.env # File environment untuk konfigurasi
+
+  # Service 2: HDFS DataNode (Penyimpan Data HDFS)
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    restart: always
+    volumes:
+      - hadoop_datanode_data:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - ./hadoop.env # Menggunakan file env yang sama
+
+  # Service 3: Spark Master (Pengelola Spark)
+  spark-master:
+    image: bde2020/spark-master:3.3.0-hadoop3.3
+    container_name: spark-master
+    ports:
+      - "8080:8080"  # Web UI Spark Master
+      - "7077:7077"  # Port untuk Spark worker terhubung
+    environment:
+      - INIT_DAEMON_STEP=setup_spark
+    env_file:
+      - ./hadoop.env # Menggunakan file env yang sama
+
+  # Service 4: Spark Worker (Pekerja Spark)
+  spark-worker:
+    image: bde2020/spark-worker:3.3.0-hadoop3.3
+    container_name: spark-worker
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081" # Web UI Spark Worker
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
+    env_file:
+      - ./hadoop.env # Menggunakan file env yang sama
+
+# Volumes (Tempat Docker menyimpan data HDFS)
+volumes:
+  hadoop_namenode_data:
+  hadoop_datanode_data:
+
+# Networks (Agar semua container bisa 'berbicara' satu sama lain)
+networks:
+  default:
+    name: hadoop_spark_network
