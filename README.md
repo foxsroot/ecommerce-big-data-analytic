@@ -38,7 +38,7 @@ Tujuan: Memindahkan file `ecommerce.parquet` dari *filesystem* Windows ke *files
 1.  **Salin File dari Windows ke Container**
     Menyalin file dari folder `Downloads` Windows (diakses melalui `/mnt/c/` di WSL) ke folder `/tmp` di dalam container `namenode`.
     ```bash
-    docker cp /mnt/c/Users/juank/Downloads/ecommerce.parquet namenode:/tmp/ecommerce.parquet
+    docker cp /<YOUR_PARQUET_FILE_LOCATION>/ecommerce.parquet namenode:/tmp/ecommerce.parquet
     ```
 
 2.  **Buat Direktori di HDFS**
@@ -108,4 +108,4 @@ Tujuan: Memindahkan file `ecommerce.parquet` dari *filesystem* Windows ke *files
 Untuk melihat file `penjualan_bulanan.png` di Windows, file tersebut disalin ke folder `Downloads` Windows.
 
 ```bash
-cp penjualan_bulanan.png /mnt/c/Users/juank/Downloads/
+cp penjualan_bulanan.png <YOUR__TARGET_DIRECTORY>
